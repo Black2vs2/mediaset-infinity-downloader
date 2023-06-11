@@ -1,3 +1,8 @@
+#Mediaset Infinity Downloader ignores
+src/executables/yt-dlp*
+output/*
+!output/README.md
+
 # Logs
 logs
 *.log

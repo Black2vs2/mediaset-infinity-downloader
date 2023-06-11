@@ -1,113 +1,86 @@
-# node-typescript-boilerplate
+# Mediaset Infinity Downloader
 
-[![Sponsor][sponsor-badge]][sponsor]
-[![TypeScript version][ts-badge]][typescript-5-0]
-[![Node.js version][nodejs-badge]][nodejs]
-[![APLv2][license-badge]][license]
-[![Build Status - GitHub Actions][gha-badge]][gha-ci]
+Mediaset Infinity Downloader is a typescript library to download [Mediaset Infinity](mediasetinfinity.mediaset.it) movies or tv-series.
+It uses [yt-dlp](https://github.com/yt-dlp/yt-dlp) to download the actual episodes.
 
-👩🏻‍💻 Developer Ready: A comprehensive template. Works out of the box for most [Node.js][nodejs] projects.
+## Installation
 
-🏃🏽 Instant Value: All basic tools included and configured:
+To use mediaset-infinity-downloader, clone this repo and cd into the cloned folder.
+Then you have to install needed packages
 
-- [TypeScript][typescript] [5.0][typescript-5-0]
-- [ESM][esm]
-- [ESLint][eslint] with some initial rules recommendation
-- [Jest][jest] for fast unit testing and code coverage
-- Type definitions for Node.js and Jest
-- [Prettier][prettier] to enforce consistent code style
-- NPM [scripts](#available-scripts) for common operations
-- [EditorConfig][editorconfig] for consistent coding style
-- Reproducible environments thanks to [Volta][volta]
-- Example configuration for [GitHub Actions][gh-actions]
-- Simple example of TypeScript code and unit test
+```bash
+# Install typescript runner
+npm install --global ts-node
 
-🤲 Free as in speech: available under the APLv2 license.
-
-## Getting Started
-
-This project is intended to be used with the latest Active LTS release of [Node.js][nodejs].
-
-### Use as a repository template
-
-To start, just click the **[Use template][repo-template-action]** link (or the green button). Start adding your code in the `src` and unit tests in the `__tests__` directories.
-
-### Clone repository
-
-To clone the repository, use the following commands:
-
-```sh
-git clone https://github.com/jsynowiec/node-typescript-boilerplate
-cd node-typescript-boilerplate
+# Install project packages
 npm install
 ```
 
-### Download latest release
-
-Download and unzip the current **main** branch or one of the tags:
-
-```sh
-wget https://github.com/jsynowiec/node-typescript-boilerplate/archive/main.zip -O node-typescript-boilerplate.zip
-unzip node-typescript-boilerplate.zip && rm node-typescript-boilerplate.zip
+## Setup
+1. Make ```yt-dlp``` accessible to the script:
+    1. Download the executable (for your machine)
+    2. Put the executable into the folder ```src/executables```
+2. Tweak your ```src/user/config.ts``` file making sure the ```ytDlpPath``` is correct and the ```outputFolder``` exists.
+3. Fill in your ```src/user/episodes.ts``` with an array of strings containing the episode or movie page. Example below
+    ```typescript
+    export default [
+      'https://mediasetinfinity.mediaset.it/video/terraamara/episodio-243_F311851102010702',
+      'https://mediasetinfinity.mediaset.it/video/terraamara/episodio-242_F311851102010602',
+    ];
+    ```
+## How to use
+```typescript
+# cd into the project folder
+cd mediaset-infinitry-downloader
+# run the script
+npm run start
 ```
-
-## Available Scripts
-
-- `clean` - remove coverage data, Jest cache and transpiled files,
-- `prebuild` - lint source files and tests before building,
-- `build` - transpile TypeScript to ES6,
-- `build:watch` - interactive watch mode to automatically transpile source files,
-- `lint` - lint source files and tests,
-- `prettier` - reformat files,
-- `test` - run tests,
-- `test:watch` - interactive watch mode to automatically re-run tests
-
-## Additional Information
-
-### Why include Volta
-
-[Volta][volta]’s toolchain always keeps track of where you are, it makes sure the tools you use always respect the settings of the project you’re working on. This means you don’t have to worry about changing the state of your installed software when switching between projects. For example, it's [used by engineers at LinkedIn][volta-tomdale] to standardize tools and have reproducible development environments.
-
-I recommend to [install][volta-getting-started] Volta and use it to manage your project's toolchain.
-
-### ES Modules
-
-This template uses native [ESM][esm]. Make sure to read [this][nodejs-esm], and [this][ts47-esm] first.
-
-If your project requires CommonJS, you will have to [convert to ESM][sindresorhus-esm].
-
-Please do not open issues for questions regarding CommonJS or ESM on this repo.
-
-## Backers & Sponsors
-
-Support this project by becoming a [sponsor][sponsor].
-
-## License
-
-Licensed under the APLv2. See the [LICENSE](https://github.com/jsynowiec/node-typescript-boilerplate/blob/main/LICENSE) file for details.
-
-[ts-badge]: https://img.shields.io/badge/TypeScript-5.0-blue.svg
-[nodejs-badge]: https://img.shields.io/badge/Node.js->=%2018.12-blue.svg
-[nodejs]: https://nodejs.org/dist/latest-v18.x/docs/api/
-[gha-badge]: https://github.com/jsynowiec/node-typescript-boilerplate/actions/workflows/nodejs.yml/badge.svg
-[gha-ci]: https://github.com/jsynowiec/node-typescript-boilerplate/actions/workflows/nodejs.yml
-[typescript]: https://www.typescriptlang.org/
-[typescript-5-0]: https://devblogs.microsoft.com/typescript/announcing-typescript-5-0/
-[license-badge]: https://img.shields.io/badge/license-APLv2-blue.svg
-[license]: https://github.com/jsynowiec/node-typescript-boilerplate/blob/main/LICENSE
-[sponsor-badge]: https://img.shields.io/badge/♥-Sponsor-fc0fb5.svg
-[sponsor]: https://github.com/sponsors/jsynowiec
-[jest]: https://facebook.github.io/jest/
-[eslint]: https://github.com/eslint/eslint
-[wiki-js-tests]: https://github.com/jsynowiec/node-typescript-boilerplate/wiki/Unit-tests-in-plain-JavaScript
-[prettier]: https://prettier.io
-[volta]: https://volta.sh
-[volta-getting-started]: https://docs.volta.sh/guide/getting-started
-[volta-tomdale]: https://twitter.com/tomdale/status/1162017336699838467?s=20
-[gh-actions]: https://github.com/features/actions
-[repo-template-action]: https://github.com/jsynowiec/node-typescript-boilerplate/generate
-[esm]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules
-[sindresorhus-esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
-[nodejs-esm]: https://nodejs.org/docs/latest-v16.x/api/esm.html
-[ts47-esm]: https://devblogs.microsoft.com/typescript/announcing-typescript-5-0/#esm-nodejs
-[editorconfig]: https://editorconfig.org
+## Tips And Tricks
+### Customizing files output name
+By default yt-dlp uses the name that the .mp4 you are about to download as the output file name
+I've added in the config a way to programmatically change the output of the file name. Follow steps below to use it
+1. Enable ```customOutputName``` in the src/user/config.ts
+2. Adjust ```customOutputNameFunction``` to output a string that will be automatically be used as the file name for the corresponding element in the array.
+### To gather the list of links there are three ways
+* **Simplest, safest but most time-consuming**
+    1. Open each episode page and copy the link manually.
+    2. Add it to ```episodes.ts``` array surrounded by ticks.
+* **Most prone to fail (if mediasetinfinity changes the page structure) but fastest**
+    1. Scroll to the bottom in the episodes list page
+    2. Open browser console and paste this js ```copy($$('a[href*="/video/"]').map((x)=>x.href))```
+    3. You will find in your clipboard the array of all episodes links
+    4. Paste the episodes array into the ```episodes.ts``` file
+* **Most reliable (requires some expertise)**
+    1. Open an episodes list page (example: https://mediasetinfinity.mediaset.it/fiction/bitterlands/episodi_SE000000001766,ST000000003181,sb100018308)
+    2. Open devtools and go to Network Tab
+    3. Scroll to the bottom of the page
+    4. You will see a new ```type:'fetch'``` request appearing named ```mediaset-prod-all-programs-v2```
+    5. Right click then ```Copy > Copy as fetch```
+    6. Go to Console Tab of the devtools
+    7. Paste the copied fetch (example below)
+        ```javascript
+        fetch("https://feed.entertainment.tv.theplatform.eu/f/PR1GhC/mediaset-prod-all-programs-v2?byCustomValue={subBrandId} 
+        {100018308}&sort=:publishInfo_lastPublished|desc,tvSeasonEpisodeNumber|desc&range=1-1000", {
+        "headers": {
+            "accept": "*/*",
+            "accept-language": "it-IT,it;q=0.9,en-US;q=0.8,en;q=0.7",
+            "sec-ch-ua": "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Google Chrome\";v=\"114\"",
+            "sec-ch-ua-mobile": "?0",
+            "sec-ch-ua-platform": "\"Windows\"",
+            "sec-fetch-dest": "empty",
+            "sec-fetch-mode": "cors",
+            "sec-fetch-site": "cross-site"
+        },
+        "referrer": "https://mediasetinfinity.mediaset.it/",
+        "referrerPolicy": "strict-origin-when-cross-origin",
+        "body": null,
+        "method": "GET",
+        "mode": "cors",
+        "credentials": "omit"
+        });
+        ```
+    8. Modify the ```range``` queryParam to any number you want (in the example above i modified it to 1 to 1000)
+    9. Run the ```fetch``` by pressing enter
+    10. Go back to Network Tab
+    11. Select the request we just did and in the preview tab right click ```entries``` and press ```Copy value```.
+    12. Paste the episodes array into the ```episodes.ts``` file

@@ -1,34 +1,32 @@
-/**
- * Some predefined delay values (in milliseconds).
- */
-export enum Delays {
-  Short = 500,
-  Medium = 2000,
-  Long = 5000,
-}
+import * as child from 'child_process';
 
-/**
- * Returns a Promise<string> that resolves after a given time.
- *
- * @param {string} name - A name.
- * @param {number=} [delay=Delays.Medium] - A number of milliseconds to delay resolution of the Promise.
- * @returns {Promise<string>}
- */
-function delayedHello(
-  name: string,
-  delay: number = Delays.Medium,
-): Promise<string> {
-  return new Promise((resolve: (value?: string) => void) =>
-    setTimeout(() => resolve(`Hello, ${name}`), delay),
+import episodes from './user/episodes';
+import config from './user/config';
+
+console.log('Starting download process...');
+if (config.output.customOutputName) console.log('Using custom output name');
+
+episodes.forEach((episodeLink, index) => {
+  // Default naming convention, to use a custom one provide a customOutputNameFunction and enable customOutputName
+  let episodeFileName = `episode-${index}`;
+  if (config.output.customOutputName) {
+    // Write here your file name format, otherwise set changeOutputName to false
+    episodeFileName = config.output.customOutputNameFunction(
+      episodeLink,
+      index,
+    );
+  }
+
+  console.log(`Started processing ${episodeFileName}`);
+  child.exec(
+    `"${config.ytDlpPath}" -vU ${episodeLink} -o ${config.output.outputFolder}/${episodeFileName}`,
+    (_, out, e) => {
+      if (out) {
+        console.log(`Finished ${episodeFileName}`);
+      }
+      if (config.showDebugInfo && e) {
+        console.error(e);
+      }
+    },
   );
-}
-
-// Please see the comment in the .eslintrc.json file about the suppressed rule!
-// Below is an example of how to use ESLint errors suppression. You can read more
-// at https://eslint.org/docs/latest/user-guide/configuring/rules#disabling-rules
-
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export async function greeter(name: any) { // eslint-disable-line @typescript-eslint/no-explicit-any
-  // The name parameter should be of type string. Any is used only to trigger the rule.
-  return await delayedHello(name, Delays.Long);
-}
+});
